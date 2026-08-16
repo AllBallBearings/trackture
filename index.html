@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#071612" />
+    <title>Trackture — Capture & export browser audio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./enhancements.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Trackture home"><span class="brand-mark">↯</span>trackture</a>
+        <div class="topbar-status"><span class="status-dot"></span><span id="statusText">Ready to capture</span></div>
+        <button class="text-button" id="howItWorks">How it works</button>
+      </header>
+
+      <section class="hero">
+        <div class="eyebrow">Browser audio recorder</div>
+        <h1>Keep the parts.<br><em>Not just the mix.</em></h1>
+        <p class="hero-copy">Capture audio from a browser tab, split its available audio channels, and download a clean WAV archive—right from your device.</p>
+      </section>
+
+      <section class="workbench" aria-label="Audio capture workspace">
+        <div class="capture-panel">
+          <div class="section-head">
+            <div>
+              <p class="kicker">Capture source</p>
+              <h2>Choose what you hear</h2>
+            </div>
+            <span class="format-pill" id="formatPill">WAV · 48 kHz</span>
+          </div>
+
+          <button id="selectSource" class="source-card">
+            <span class="source-icon">⌁</span>
+            <span class="source-card-copy"><strong id="sourceTitle">Select a browser tab</strong><small id="sourceHint">Chrome or Edge works best. Enable “Share tab audio.”</small></span>
+            <span class="source-arrow">→</span>
+          </button>
+
+          <div class="level-card">
+            <div class="level-top"><span>Input level</span><span class="mono" id="peakValue">−∞ dB</span></div>
+            <div class="meter" aria-label="Input level"><span id="meterFill"></span></div>
+          </div>
+
+          <div class="split-control" aria-label="Stereo export layout">
+            <span>STEREO SPLIT</span>
+            <div class="split-switch">
+              <button class="active" data-split="midside">Center / sides</button>
+              <button data-split="channels">Left / right</button>
+            </div>
+          </div>
+
+          <div class="recording-actions">
+            <button id="recordButton" class="record-button" disabled><span></span>Start recording</button>
+            <button id="stopButton" class="stop-button" disabled>Stop</button>
+          </div>
+          <p class="helper" id="captureHelp">Your audio remains in this browser until you download it.</p>
+        </div>
+
+        <div class="tracks-panel">
+          <div class="section-head tracks-head">
+            <div>
+              <p class="kicker">Output tracks</p>
+              <h2>Separate channels</h2>
+            </div>
+            <span class="track-count" id="trackCount">0 TRACKS</span>
+          </div>
+
+          <div class="empty-state" id="emptyState">
+            <div class="empty-lines"><i></i><i></i><i></i></div>
+            <p>Select a source to reveal its available audio channels.</p>
+          </div>
+          <div class="track-list" id="trackList" hidden></div>
+          <div class="track-note" id="trackNote" hidden><span>i</span> A channel split preserves discrete channels (e.g. left/right). It cannot unmix vocals, drums, or other sounds already combined in one channel.</div>
+        </div>
+      </section>
+
+      <section class="export-area" id="exportArea" hidden>
+        <div class="export-summary">
+          <div class="archive-icon">↓</div>
+          <div><p class="kicker">Recording complete</p><h2>Your tracks are ready.</h2><p id="exportDetail">WAV files packaged in one archive.</p></div>
+        </div>
+        <button id="downloadButton" class="download-button">Download ZIP <span>↗</span></button>
+      </section>
+
+      <section class="privacy-strip">
+        <div><span class="privacy-icon">⌁</span><strong>Private by design</strong><p>Processing happens locally in your browser. No audio is uploaded.</p></div>
+        <div><span class="privacy-icon">◎</span><strong>Source-aware</strong><p>Only channels supplied by the selected source can be exported separately.</p></div>
+        <div><span class="privacy-icon">□</span><strong>Simple archive</strong><p>Each result is a standard WAV file inside one ZIP download.</p></div>
+      </section>
+    </main>
+
+    <dialog id="infoDialog">
+      <button class="close-dialog" aria-label="Close">×</button>
+      <p class="kicker">A quick note</p>
+      <h2>What this can separate</h2>
+      <p>Web browsers can capture audio only after you explicitly choose a tab or screen and grant permission. If the source has discrete audio channels, Trackture exports each channel as its own WAV file, plus the original mix.</p>
+      <p>It cannot turn one already-mixed channel into isolated instruments or speakers. For that, the original multitrack source or an external stem-separation service is needed.</p>
+      <button class="dialog-action">Got it</button>
+    </dialog>
+    <script src="./app.js"></script>
+  </body>
+</html>
